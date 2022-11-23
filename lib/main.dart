@@ -1,3 +1,5 @@
+import 'package:flash_for_teamproject/Theme/color.dart';
+import 'package:flash_for_teamproject/Theme/font.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: ReturnColor('blue'),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -39,28 +41,40 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            SizedBox(
+              height: 100,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            Text('Flash',
+                style: Timetravel(
+                  22,
+                  22,
+                )),
+            SizedBox(
+              width: 400,
+              height: 200,
+              child: ElevatedButton(
+                  onPressed: (() {
+                    Navigator.pushNamed(context, '/reaction_time');
+                  }),
+                  child: Text('')),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.business),
+          label: 'Business',
+        ),
+      ]),
     );
   }
 }
