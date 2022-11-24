@@ -20,16 +20,21 @@ class _ReactionTimeState extends State<ReactionTime> {
     return Scaffold(
       backgroundColor:
           (isStarted == false) ? ReturnColor('blue') : ReturnColor('red'),
-      body: Column(
-        children: [
-          TextButton(
-              onPressed: (() {
-                setState(() {
-                  isStarted = true;
-                });
-              }),
-              child: Text('touch to start'))
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+                onPressed: (() {
+                  setState(() {
+                    isStarted = true;
+                  });
+                }),
+                child: Text(
+                  'touch to start',
+                  style: TextStyle(color: Colors.white),
+                ))
+          ],
+        ),
       ),
     );
   }
