@@ -131,7 +131,6 @@ class _ReactionTimeState extends State<ReactionTime> {
       await player.resume();
       setState(() {
         isTimeToTouch = true;
-        _time = 0;
       });
     });
 
@@ -257,12 +256,12 @@ class _ReactionTimeState extends State<ReactionTime> {
       minWidth: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       onPressed: (() {
+        _time = 0;
         setState(() {
           isStarted = true;
           isTimeToTouch = false;
           isKeepGoing = false;
           _isPlaying = false;
-          _time = 0;
         });
         print(_time);
       }),
