@@ -64,6 +64,46 @@ class _MyHomepageState extends State<MyHomepage> {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Column(
+            // 홈에 있는 각 게임의 버튼을 구성합니다.
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+                child: Stack(
+                  children: [
+                    ElevatedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            side: BorderSide(
+                                width: 0, color: ReturnColor('white')),
+                            backgroundColor: ReturnColor('white'),
+                            fixedSize: Size(330, 150)),
+                        onPressed: (() {
+                          Navigator.pushNamed(context, '/reaction_time');
+                        }),
+                        child: Text(
+                          '275 MS',
+                          style: Timetravel(32, 34.08, color: 'blue'),
+                        )),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Center(
+                child: Text(
+                  'Reaction Time',
+                  style: ABeeZee(20, 23.64),
+                ),
+              ),
+            ],
           )
         ],
       ),

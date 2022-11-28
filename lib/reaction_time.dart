@@ -5,6 +5,8 @@ import 'package:flash_for_teamproject/Theme/font.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
+
 class ReactionTime extends StatefulWidget {
   const ReactionTime({
     Key? key,
@@ -70,6 +72,7 @@ class _ReactionTimeState extends State<ReactionTime> {
       onPressed: (() {
         print('hello'); //잘 되는지 확인
         setState(() {
+          _isPlaying = true;
           if (isStarted == false) {
             isStarted = true;
           }
@@ -122,7 +125,10 @@ class _ReactionTimeState extends State<ReactionTime> {
   }
 
   Widget ReactionTimeReady() {
-    Future.delayed(Duration(milliseconds: _RandomTime), () {
+    Future.delayed(Duration(milliseconds: _RandomTime), () async {
+      final player = AudioPlayer();
+      await player.setSource(AssetSource('sound/reaction_time_pop.wav'));
+      await player.resume();
       setState(() {
         isTimeToTouch = true;
         _time = 0;
@@ -179,13 +185,15 @@ class _ReactionTimeState extends State<ReactionTime> {
   }
 
   Widget ReactionTimeTouch() {
-    _timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
-      if (this.mounted) {
-        setState(() {
-          _time = _time + 1;
-        });
-      }
-    });
+    if (_isPlaying == true) {
+      _timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
+        if (this.mounted) {
+          setState(() {
+            _time = _time + 1;
+          });
+        }
+      });
+    }
 
     return MaterialButton(
       color: ReturnColor('green'),
@@ -197,10 +205,12 @@ class _ReactionTimeState extends State<ReactionTime> {
           _timer.cancel();
           _reactionTime = _time;
           playCount = playCount - 1;
-          _RandomTime = Random().nextInt(3000) + 1000;
+          _totalReactionTime = _totalReactionTime + _reactionTime;
+          _RandomTime = Random().nextInt(2000) + 2000;
         });
         print(_time);
         print(_RandomTime);
+        print(_totalReactionTime);
       }),
       child: Column(
         children: [
@@ -251,8 +261,8 @@ class _ReactionTimeState extends State<ReactionTime> {
           isStarted = true;
           isTimeToTouch = false;
           isKeepGoing = false;
+          _isPlaying = false;
           _time = 0;
-          _totalReactionTime = _totalReactionTime + _reactionTime;
         });
         print(_time);
       }),
@@ -311,6 +321,8 @@ class _ReactionTimeState extends State<ReactionTime> {
   }
 
   Widget ReactionTimeResult() {
+    score = _totalReactionTime + (500 * missTouchCount);
+
     return MaterialButton(
       color: ReturnColor('blue'),
       minWidth: MediaQuery.of(context).size.width,
