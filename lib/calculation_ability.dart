@@ -1,58 +1,67 @@
 import 'dart:math';
 
-import 'package:flash_for_teamproject/Theme/color.dart';
-import 'package:flash_for_teamproject/Theme/font.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
+import '../Theme/color.dart';
+import '../Theme/font.dart';
 
-class ReactionTime extends StatefulWidget {
-  const ReactionTime({
-    Key? key,
-  }) : super(key: key);
+class CalculationAbilityPage extends StatefulWidget {
+  const CalculationAbilityPage({super.key});
 
   @override
-  _ReactionTimeState createState() => _ReactionTimeState();
+  State<CalculationAbilityPage> createState() => _CalculationAbilityPageState();
 }
 
-class _ReactionTimeState extends State<ReactionTime> {
-  _ReactionTimeState({Key? key});
-  bool isStarted = false; //게임 시작 여부
-  bool isTimeToTouch = false; //false시 ready, true시 touch
-  bool isKeepGoing = false; //true시 KeepGoing페이지
-  Timer _timer = new Timer(const Duration(), () {}); //타이머
-  var _time = 0; //타이머 시간 표시
-  var _reactionTime = 0;
-  var _RandomTime = 0;
-  var _totalReactionTime = 0; //반응속도 총합
-  var _isPlaying = false; // 타이머 작동/정지 여부
-  var playCount = 5; //한 번에 총 5번 플레이한다
-  var missTouchCount = 0; //잘못 누른 횟수
-  var score = 0; //최종 점수. 점수 공식은 _totalReactionTime + (500 * missTouchCount)
+class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
+  int playCount = 10;
+  bool isStarted = false;
+  bool isTimeToTouch = false;
+  bool isKeepGoing = false;
+  bool isRight = false; //정답 판별
+  int missTouchCount = 0;
+  int frontNum = 0;
+  int backNum = 0;
+  int mathematicalSymbolValue = 0;
+  String mathematicalSymbol = "";
+  int score = 0; //최종 점수
+  int _time = 0; //걸린 시간
+  int answerValue = 0; //정답 값
+  int lowerThanAnswer = 0; //정답보다 낮은 값 (틀린값)
+  int higherThanAnswer = 0; //정답보다 높은 값 (틀린값)
+  int selectedValue = 0; //사용자가 선택한 답의 값을 저장
+  int answerButton = 0; //정답 값이 들어있는 버튼의 index
 
   Widget screenChange() {
     if (playCount <= 0) {
-      return ReactionTimeResult();
+      return CalculationAbilityResult();
     } else if (isStarted == false &&
         isTimeToTouch == false &&
         isKeepGoing == false) {
-      return ReactionTimeNotStarted();
+      return CalculationAbilityNotStarted();
     } else if (isStarted == true &&
         isTimeToTouch == false &&
         isKeepGoing == false) {
-      return ReactionTimeReady();
+      return CalculationAbility();
     } else if (isStarted == true &&
         isTimeToTouch == true &&
         isKeepGoing == false) {
-      return ReactionTimeTouch();
+      return CalculationAbility();
     } else if (isStarted == true &&
         isTimeToTouch == true &&
         isKeepGoing == true) {
-      return ReactionTimeKeepGoing();
+      return CalculationAbility();
     } else {
-      return ReactionTimeError();
+      return CalculationAbilityError();
     }
+  }
+
+  String mathematicalSymbolReturn(int value) {
+    if (value == 0) {
+      return "+";
+    } else {
+      return "-";
+    }
+    ;
   }
 
   @override
@@ -70,7 +79,7 @@ class _ReactionTimeState extends State<ReactionTime> {
     );
   }
 
-  Widget ReactionTimeNotStarted() {
+  Widget CalculationAbilityNotStarted() {
     return MaterialButton(
       color: ReturnColor('blue'),
       minWidth: MediaQuery.of(context).size.width,
@@ -81,7 +90,19 @@ class _ReactionTimeState extends State<ReactionTime> {
           if (isStarted == false) {
             isStarted = true;
           }
-          _RandomTime = Random().nextInt(3000) + 1000;
+          answerButton = Random().nextInt(2);
+          frontNum = Random().nextInt(40) + 1;
+          backNum = Random().nextInt(40) + 1;
+          mathematicalSymbolValue = Random().nextInt(2);
+          mathematicalSymbol =
+              mathematicalSymbolReturn(mathematicalSymbolValue);
+          if (mathematicalSymbolValue == 0) {
+            answerValue = frontNum + backNum;
+          } else {
+            answerValue = frontNum - backNum;
+          }
+          lowerThanAnswer = answerValue - Random().nextInt(5) + 1;
+          higherThanAnswer = answerValue + Random().nextInt(5) + 1;
         });
       }),
       child: Column(
@@ -91,9 +112,9 @@ class _ReactionTimeState extends State<ReactionTime> {
           ),
           SizedBox(
             width: 330,
-            height: 50,
+            height: 100,
             child: Text(
-              'Reaction Time',
+              'Calculation\nAbility',
               style: ABeeZee(40, 47.28),
               textAlign: TextAlign.center,
             ),
@@ -106,7 +127,7 @@ class _ReactionTimeState extends State<ReactionTime> {
             height: 110,
             child: Center(
               child: Text(
-                'When the red screen turns green, Touch the screen as quickly as you can.',
+                'Touch the answer to the formula on the screen as quickly as you can.',
                 style: ABeeZee(20, 23.64),
                 textAlign: TextAlign.center,
               ),
@@ -129,157 +150,12 @@ class _ReactionTimeState extends State<ReactionTime> {
     );
   }
 
-  Widget ReactionTimeReady() {
-    Future.delayed(Duration(milliseconds: _RandomTime), () async {
-      setState(() {
-        isTimeToTouch = true;
-        _isPlaying = true;
-      });
-    });
-
-    return MaterialButton(
-      color: ReturnColor('red'),
-      minWidth: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      onPressed: (() {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Wrong Touch! +500ms penalty'),
-            action: SnackBarAction(
-              label: 'Okay',
-              onPressed: () {},
-            ),
-          ),
-        );
-        missTouchCount = missTouchCount + 1;
-      }),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 70,
-          ),
-          SizedBox(
-            width: 330,
-            height: 50,
-            child: Text(
-              'Reaction Time',
-              style: ABeeZee(40, 47.28),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          SizedBox(
-              width: 100,
-              height: 100,
-              child: Icon(
-                Icons.hourglass_top,
-                size: 100,
-                color: ReturnColor('white'),
-              )),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: 300,
-            height: 110,
-            child: Text(
-              'Ready...',
-              style: ABeeZee(40, 47.28),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget ReactionTimeTouch() {
-    return MaterialButton(
-      color: ReturnColor('green'),
-      minWidth: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      onPressed: (() {
-        setState(() {
-          isKeepGoing = true;
-          _timer.cancel();
-          _reactionTime = _time;
-          playCount = playCount - 1;
-          _totalReactionTime = _totalReactionTime + _reactionTime;
-          _RandomTime = Random().nextInt(2000) + 2000;
-        });
-        print(_time);
-        print(_RandomTime);
-        print(_totalReactionTime);
-      }),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 70,
-          ),
-          SizedBox(
-            width: 330,
-            height: 50,
-            child: Text(
-              'Reaction Time',
-              style: ABeeZee(40, 47.28),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(
-            height: 100,
-          ),
-          SizedBox(
-              width: 100,
-              height: 100,
-              child: Icon(Icons.hourglass_bottom,
-                  size: 100, color: ReturnColor('white'))),
-          SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            width: 300,
-            height: 110,
-            child: Text(
-              'Touch!',
-              style: ABeeZee(40, 47.28),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget ReactionTimeKeepGoing() {
+  Widget CalculationAbility() {
     return MaterialButton(
       color: ReturnColor('blue'),
       minWidth: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      onPressed: (() {
-        final player = AudioPlayer();
-        player.setSource(AssetSource('sound/reaction_time_pop.wav'));
-        player.resume();
-
-        setState(() {
-          isStarted = true;
-          isTimeToTouch = false;
-          isKeepGoing = false;
-          _isPlaying = false;
-          _time = 0;
-        });
-        print(_time);
-        if (_isPlaying == true) {
-          _timer = Timer.periodic(Duration(milliseconds: 1), (timer) {
-            if (this.mounted) {
-              setState(() {
-                _time = _time + 1;
-              });
-            }
-          });
-        }
-      }),
+      onPressed: (() {}),
       child: Column(
         children: [
           SizedBox(
@@ -287,42 +163,86 @@ class _ReactionTimeState extends State<ReactionTime> {
           ),
           SizedBox(
             width: 330,
-            height: 50,
+            height: 100,
             child: Text(
-              'Reaction Time',
+              'Calculation\nAbility',
               style: ABeeZee(40, 47.28),
               textAlign: TextAlign.center,
             ),
           ),
           SizedBox(
-            height: 150,
+            height: 100,
           ),
           SizedBox(
-              width: 330,
-              height: 100,
+              width: 300,
+              height: 110,
               child: Text(
-                '${_reactionTime} MS',
-                style: Timetravel(40, 42.6),
+                '${frontNum} ${mathematicalSymbol} ${backNum} = ',
+                style: ABeeZee(40, 47.28),
                 textAlign: TextAlign.center,
               )),
           SizedBox(
             height: 10,
           ),
-          SizedBox(
-            width: 300,
-            height: 110,
-            child: Text(
-              'Touch to\nKeep Going',
-              style: ABeeZee(40, 47.28),
-              textAlign: TextAlign.center,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              MaterialButton(
+                minWidth: 80,
+                height: 80,
+                shape: CircleBorder(
+                    side: BorderSide(width: 0, color: ReturnColor('white'))),
+                onPressed: () {
+                  setState(() {
+                    if (answerButton == 0) {
+                      selectedValue = answerValue;
+                      isRight = true;
+                    } else {
+                      selectedValue = lowerThanAnswer;
+                      isRight = false;
+                    }
+                  });
+                },
+                color: ReturnColor('white'),
+                child: Text(
+                  (answerButton == 0) ? "${answerValue}" : "${lowerThanAnswer}",
+                  style: ABeeZee(40, 47.28, color: 'blue'),
+                ),
+              ),
+              MaterialButton(
+                minWidth: 80,
+                height: 80,
+                shape: CircleBorder(
+                    side: BorderSide(width: 0, color: ReturnColor('white'))),
+                onPressed: () {},
+                color: ReturnColor('white'),
+                child: Text(
+                  (answerButton == 1) ? "${answerValue}" : "${lowerThanAnswer}",
+                  style: ABeeZee(40, 47.28, color: 'blue'),
+                ),
+              ),
+              MaterialButton(
+                minWidth: 80,
+                height: 80,
+                shape: CircleBorder(
+                    side: BorderSide(width: 0, color: ReturnColor('white'))),
+                onPressed: () {},
+                color: ReturnColor('white'),
+                child: Text(
+                  (answerButton == 2)
+                      ? "${answerValue}"
+                      : "${higherThanAnswer}",
+                  style: ABeeZee(40, 47.28, color: 'blue'),
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 40,
           ),
           SizedBox(
-            width: 300,
-            height: 110,
+            width: 330,
+            height: 50,
             child: Text(
               '${playCount} Times Left',
               style: ABeeZee(20, 23.64),
@@ -334,8 +254,8 @@ class _ReactionTimeState extends State<ReactionTime> {
     );
   }
 
-  Widget ReactionTimeResult() {
-    score = _totalReactionTime + (500 * missTouchCount);
+  Widget CalculationAbilityResult() {
+    score = _time + (500 * missTouchCount);
 
     return MaterialButton(
       color: ReturnColor('blue'),
@@ -380,7 +300,7 @@ class _ReactionTimeState extends State<ReactionTime> {
               height: 50,
               child: Center(
                 child: Text(
-                  '${_totalReactionTime} ms',
+                  '${_time} ms',
                   style: ABeeZee(32, 37.82),
                   textAlign: TextAlign.center,
                 ),
@@ -411,7 +331,7 @@ class _ReactionTimeState extends State<ReactionTime> {
     );
   }
 
-  Widget ReactionTimeError() {
+  Widget CalculationAbilityError() {
     return MaterialButton(
       color: ReturnColor('red'),
       minWidth: MediaQuery.of(context).size.width,
@@ -432,7 +352,7 @@ class _ReactionTimeState extends State<ReactionTime> {
             width: 330,
             height: 50,
             child: Text(
-              'Reaction Time',
+              'Calculation\nAbility',
               style: ABeeZee(40, 47.28),
               textAlign: TextAlign.center,
             ),

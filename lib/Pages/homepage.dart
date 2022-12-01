@@ -85,11 +85,11 @@ class _MyHomepageState extends State<MyHomepage> {
                             backgroundColor: ReturnColor('white'),
                             fixedSize: Size(330, 150)),
                         onPressed: (() {
-                          Navigator.pushNamed(context, '/reaction_time');
+                          Navigator.pushNamed(context, '/calculation_ability');
                         }),
                         child: Text(
-                          '275 MS',
-                          style: Timetravel(32, 34.08, color: 'blue'),
+                          '3 + 5 = 8',
+                          style: ABeeZee(40, 47.28, color: 'blue'),
                         )),
                   ],
                 ),
@@ -99,7 +99,7 @@ class _MyHomepageState extends State<MyHomepage> {
               ),
               Center(
                 child: Text(
-                  'Reaction Time',
+                  'Calculation Ability',
                   style: ABeeZee(20, 23.64),
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'Theme/color.dart';
 import 'main.dart';
 import 'reaction_time.dart';
+import 'calculation_ability.dart';
 import 'home.dart';
 
 class MyApp extends StatelessWidget {
@@ -18,6 +19,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (BuildContext context) => const MyHome(),
         '/reaction_time': (BuildContext context) => const ReactionTime(),
+        '/calculation_ability': (BuildContext context) =>
+            const CalculationAbilityPage(),
       },
     );
   }
