@@ -212,8 +212,8 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
                 height: 80,
                 shape: CircleBorder(
                     side: BorderSide(width: 0, color: ReturnColor('white'))),
-                onPressed: () {
-                  audioPlayer.play(AssetSource('sound/touch_pop.mp3'));
+                onPressed: () async {
+                  await audioPlayer.play(AssetSource('sound/touch_pop.mp3'));
                   setState(() {
                     if (answerButton == 0) {
                       selectedValue = answerValue;

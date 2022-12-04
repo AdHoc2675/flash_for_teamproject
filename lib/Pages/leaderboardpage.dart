@@ -1,3 +1,4 @@
+import 'package:flash_for_teamproject/leaderboard_detail.dart';
 import 'package:flutter/material.dart';
 
 import '../Theme/color.dart';
@@ -44,7 +45,13 @@ class _MyLeaderboardPageState extends State<MyLeaderboardPage> {
                                 width: 0, color: ReturnColor('white')),
                             backgroundColor: ReturnColor('white'),
                             fixedSize: Size(330, 80)),
-                        onPressed: (() {}),
+                        onPressed: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyLeaderboardDetailPage()));
+                        }),
                         child: Row(
                           children: [
                             SizedBox(
@@ -90,7 +97,13 @@ class _MyLeaderboardPageState extends State<MyLeaderboardPage> {
                                 width: 0, color: ReturnColor('white')),
                             backgroundColor: ReturnColor('white'),
                             fixedSize: Size(330, 80)),
-                        onPressed: (() {}),
+                        onPressed: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyLeaderboardDetailPage()));
+                        }),
                         child: Row(
                           children: [
                             SizedBox(
@@ -136,7 +149,13 @@ class _MyLeaderboardPageState extends State<MyLeaderboardPage> {
                                 width: 0, color: ReturnColor('white')),
                             backgroundColor: ReturnColor('white'),
                             fixedSize: Size(330, 80)),
-                        onPressed: (() {}),
+                        onPressed: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyLeaderboardDetailPage()));
+                        }),
                         child: Row(
                           children: [
                             SizedBox(
@@ -182,7 +201,13 @@ class _MyLeaderboardPageState extends State<MyLeaderboardPage> {
                                 width: 0, color: ReturnColor('white')),
                             backgroundColor: ReturnColor('white'),
                             fixedSize: Size(330, 80)),
-                        onPressed: (() {}),
+                        onPressed: (() {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MyLeaderboardDetailPage()));
+                        }),
                         child: Row(
                           children: [
                             SizedBox(
