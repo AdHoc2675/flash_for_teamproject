@@ -1,6 +1,9 @@
 import 'dart:math';
+import 'dart:async';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:time/time.dart';
 
 import '../Theme/color.dart';
 import '../Theme/font.dart';
@@ -24,12 +27,19 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
   int mathematicalSymbolValue = 0;
   String mathematicalSymbol = "";
   int score = 0; //최종 점수
-  int _time = 0; //걸린 시간
+
   int answerValue = 0; //정답 값
   int lowerThanAnswer = 0; //정답보다 낮은 값 (틀린값)
   int higherThanAnswer = 0; //정답보다 높은 값 (틀린값)
   int selectedValue = 0; //사용자가 선택한 답의 값을 저장
   int answerButton = 0; //정답 값이 들어있는 버튼의 index
+
+  Timer _timer = new Timer(const Duration(), () {}); //타이머
+  int _time = 0; //걸린 시간
+  int second = 0; //걸린 시간 초
+  var milisecond = '0'; //걸린 시간 ms
+
+  final audioPlayer = AudioPlayer();
 
   Widget screenChange() {
     if (playCount <= 0) {
@@ -101,8 +111,18 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
           } else {
             answerValue = frontNum - backNum;
           }
-          lowerThanAnswer = answerValue - Random().nextInt(5) + 1;
-          higherThanAnswer = answerValue + Random().nextInt(5) + 1;
+          lowerThanAnswer = answerValue - (Random().nextInt(5) + 1);
+          higherThanAnswer = answerValue + (Random().nextInt(5) + 1);
+
+          _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+            if (this.mounted) {
+              setState(() {
+                _time = _time + 1;
+                second = (_time * 10).milliseconds.inSeconds;
+                milisecond = '${_time % 100}'.padLeft(2, '0');
+              });
+            }
+          });
         });
       }),
       child: Column(
@@ -193,20 +213,51 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
                 shape: CircleBorder(
                     side: BorderSide(width: 0, color: ReturnColor('white'))),
                 onPressed: () {
+                  audioPlayer.play(AssetSource('sound/touch_pop.mp3'));
                   setState(() {
                     if (answerButton == 0) {
                       selectedValue = answerValue;
                       isRight = true;
+                      playCount = playCount - 1;
+
+                      answerButton = Random().nextInt(2);
+                      frontNum = Random().nextInt(40) + 1;
+                      backNum = Random().nextInt(40) + 1;
+                      mathematicalSymbolValue = Random().nextInt(2);
+                      mathematicalSymbol =
+                          mathematicalSymbolReturn(mathematicalSymbolValue);
+                      if (mathematicalSymbolValue == 0) {
+                        answerValue = frontNum + backNum;
+                      } else {
+                        answerValue = frontNum - backNum;
+                      }
+                      lowerThanAnswer = answerValue - (Random().nextInt(5) + 1);
+                      higherThanAnswer =
+                          answerValue + (Random().nextInt(5) + 1);
                     } else {
                       selectedValue = lowerThanAnswer;
+                      missTouchCount = missTouchCount + 1;
                       isRight = false;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Wrong Touch! +500ms penalty'),
+                          action: SnackBarAction(
+                            label: 'Okay',
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (playCount <= 0) {
+                      _timer.cancel();
                     }
                   });
                 },
                 color: ReturnColor('white'),
                 child: Text(
                   (answerButton == 0) ? "${answerValue}" : "${lowerThanAnswer}",
-                  style: ABeeZee(40, 47.28, color: 'blue'),
+                  style: ABeeZee(35, 47.28, color: 'blue'),
                 ),
               ),
               MaterialButton(
@@ -214,11 +265,52 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
                 height: 80,
                 shape: CircleBorder(
                     side: BorderSide(width: 0, color: ReturnColor('white'))),
-                onPressed: () {},
+                onPressed: () {
+                  audioPlayer.play(AssetSource('sound/touch_pop.mp3'));
+                  setState(() {
+                    if (answerButton == 1) {
+                      selectedValue = answerValue;
+                      isRight = true;
+                      playCount = playCount - 1;
+
+                      answerButton = Random().nextInt(2);
+                      frontNum = Random().nextInt(40) + 1;
+                      backNum = Random().nextInt(40) + 1;
+                      mathematicalSymbolValue = Random().nextInt(2);
+                      mathematicalSymbol =
+                          mathematicalSymbolReturn(mathematicalSymbolValue);
+                      if (mathematicalSymbolValue == 0) {
+                        answerValue = frontNum + backNum;
+                      } else {
+                        answerValue = frontNum - backNum;
+                      }
+                      lowerThanAnswer = answerValue - (Random().nextInt(5) + 1);
+                      higherThanAnswer =
+                          answerValue + (Random().nextInt(5) + 1);
+                    } else {
+                      selectedValue = lowerThanAnswer;
+                      missTouchCount = missTouchCount + 1;
+                      isRight = false;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Wrong Touch! +500ms penalty'),
+                          action: SnackBarAction(
+                            label: 'Okay',
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (playCount <= 0) {
+                      _timer.cancel();
+                    }
+                  });
+                },
                 color: ReturnColor('white'),
                 child: Text(
                   (answerButton == 1) ? "${answerValue}" : "${lowerThanAnswer}",
-                  style: ABeeZee(40, 47.28, color: 'blue'),
+                  style: ABeeZee(35, 47.28, color: 'blue'),
                 ),
               ),
               MaterialButton(
@@ -226,13 +318,54 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
                 height: 80,
                 shape: CircleBorder(
                     side: BorderSide(width: 0, color: ReturnColor('white'))),
-                onPressed: () {},
+                onPressed: () {
+                  audioPlayer.play(AssetSource('sound/touch_pop.mp3'));
+                  setState(() {
+                    if (answerButton == 2) {
+                      selectedValue = answerValue;
+                      isRight = true;
+                      playCount = playCount - 1;
+
+                      answerButton = Random().nextInt(2);
+                      frontNum = Random().nextInt(40) + 1;
+                      backNum = Random().nextInt(40) + 1;
+                      mathematicalSymbolValue = Random().nextInt(2);
+                      mathematicalSymbol =
+                          mathematicalSymbolReturn(mathematicalSymbolValue);
+                      if (mathematicalSymbolValue == 0) {
+                        answerValue = frontNum + backNum;
+                      } else {
+                        answerValue = frontNum - backNum;
+                      }
+                      lowerThanAnswer = answerValue - (Random().nextInt(5) + 1);
+                      higherThanAnswer =
+                          answerValue + (Random().nextInt(5) + 1);
+                    } else {
+                      selectedValue = lowerThanAnswer;
+                      missTouchCount = missTouchCount + 1;
+                      isRight = false;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text('Wrong Touch! +500ms penalty'),
+                          action: SnackBarAction(
+                            label: 'Okay',
+                            onPressed: () {},
+                          ),
+                        ),
+                      );
+                    }
+
+                    if (playCount <= 0) {
+                      _timer.cancel();
+                    }
+                  });
+                },
                 color: ReturnColor('white'),
                 child: Text(
                   (answerButton == 2)
                       ? "${answerValue}"
                       : "${higherThanAnswer}",
-                  style: ABeeZee(40, 47.28, color: 'blue'),
+                  style: ABeeZee(35, 47.28, color: 'blue'),
                 ),
               ),
             ],
@@ -244,7 +377,16 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
             width: 330,
             height: 50,
             child: Text(
-              '${playCount} Times Left',
+              '$playCount Times Left',
+              style: ABeeZee(20, 23.64),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            width: 330,
+            height: 50,
+            child: Text(
+              '$second.$milisecond s',
               style: ABeeZee(20, 23.64),
               textAlign: TextAlign.center,
             ),
@@ -255,7 +397,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
   }
 
   Widget CalculationAbilityResult() {
-    score = _time + (500 * missTouchCount);
+    score = (_time * 10) + (500 * missTouchCount);
 
     return MaterialButton(
       color: ReturnColor('blue'),
@@ -269,9 +411,9 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
           ),
           SizedBox(
             width: 330,
-            height: 50,
+            height: 100,
             child: Text(
-              'Reaction Time',
+              'Calculation\nAbility',
               style: ABeeZee(40, 47.28),
               textAlign: TextAlign.center,
             ),
@@ -300,7 +442,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
               height: 50,
               child: Center(
                 child: Text(
-                  '${_time} ms',
+                  '${second}.${milisecond} s',
                   style: ABeeZee(32, 37.82),
                   textAlign: TextAlign.center,
                 ),
