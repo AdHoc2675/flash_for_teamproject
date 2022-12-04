@@ -63,14 +63,6 @@ class _MyHomepageState extends State<MyHomepage> {
                   style: ABeeZee(20, 23.64),
                 ),
               ),
-            ],
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Column(
-            // 홈에 있는 각 게임의 버튼을 구성합니다.
-            children: [
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
@@ -85,26 +77,96 @@ class _MyHomepageState extends State<MyHomepage> {
                             backgroundColor: ReturnColor('white'),
                             fixedSize: Size(330, 150)),
                         onPressed: (() {
-                          Navigator.pushNamed(context, '/reaction_time');
+                          Navigator.pushNamed(context, '/flip');
                         }),
-                        child: Text(
-                          '275 MS',
-                          style: Timetravel(32, 34.08, color: 'blue'),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('red')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('red')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('red')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
                         )),
+                    SizedBox(
+                      height: 8,
+                    ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 8,
-              ),
-              Center(
-                child: Text(
-                  'Reaction Time',
-                  style: ABeeZee(20, 23.64),
-                ),
-              ),
             ],
-          )
+          ),
         ],
       ),
     );

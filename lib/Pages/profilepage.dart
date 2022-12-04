@@ -40,35 +40,70 @@ class _MyProfilePageState extends State<MyProfilePage> {
           SizedBox(
             height: 30,
           ),
-          Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-                child: Stack(
-                  children: [
-                    ElevatedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          side:
-                              BorderSide(width: 0, color: ReturnColor('white')),
-                          backgroundColor: ReturnColor('white'),
-                          fixedSize: Size(330, 80)),
-                      onPressed: (() {}),
-                      child: Text(
-                        'User1234',
-                        style: ABeeZee(30, 37.82, color: 'black'),
-                      ),
+          Column(children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+              child: Stack(
+                children: [
+                  ElevatedButton(
+                    style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                        side: BorderSide(width: 0, color: ReturnColor('white')),
+                        backgroundColor: ReturnColor('white'),
+                        fixedSize: Size(330, 80)),
+                    onPressed: (() {}),
+                    child: Text(
+                      'User1234',
+                      style: ABeeZee(30, 37.82, color: 'black'),
                     ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Stack(
+              children: [
+                ElevatedButton(
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40)),
+                      side: BorderSide(width: 0, color: ReturnColor('white')),
+                      backgroundColor: ReturnColor('white'),
+                      fixedSize: Size(330, 80)),
+                  onPressed: (() {}),
+                  child: Text(
+                    'Chat',
+                    style: ABeeZee(30, 37.82, color: 'black'),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-            ],
-          )
+              ],
+            ),
+            const SizedBox(
+              height: 120,
+            ),
+            Stack(
+              children: [
+                ElevatedButton(
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40)),
+                      side: BorderSide(width: 0, color: ReturnColor('white')),
+                      backgroundColor: ReturnColor('white'),
+                      fixedSize: Size(330, 80)),
+                  onPressed: (() {
+                    Navigator.pushNamed(context, '/loading');
+                  }),
+                  child: Text(
+                    'Weather',
+                    style: ABeeZee(30, 37.82, color: 'black'),
+                  ),
+                ),
+              ],
+            ),
+          ])
         ],
       ),
     );

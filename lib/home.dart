@@ -1,4 +1,5 @@
 import 'package:flash_for_teamproject/Theme/color.dart';
+import 'package:flash_for_teamproject/data/my_location.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/homepage.dart';
@@ -19,6 +20,11 @@ class _MyHomeState extends State<MyHome> {
     setState(() {
       currentPage = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   final pages = [
