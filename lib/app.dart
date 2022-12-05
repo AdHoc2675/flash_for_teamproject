@@ -6,6 +6,7 @@ import 'Theme/color.dart';
 import 'flip_over.dart';
 import 'main.dart';
 import 'reaction_time.dart';
+import 'calculation_ability.dart';
 import 'home.dart';
 
 class MyApp extends StatelessWidget {
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         scaffoldBackgroundColor: ReturnColor('blue'),
@@ -25,6 +27,8 @@ class MyApp extends StatelessWidget {
         '/flip': (BuildContext context) => const flipOver(),
         '/weather': (BuildContext context) => WeatherScreen(),
         '/loading': (BuildContext context) => Loading(),
+        '/calculation_ability': (BuildContext context) =>
+            const CalculationAbilityPage(),
       },
     );
   }
