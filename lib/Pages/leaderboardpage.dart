@@ -164,58 +164,6 @@ class _MyLeaderboardPageState extends State<MyLeaderboardPage> {
                             SizedBox(
                               width: 200,
                               child: Text(
-                                'One-to-Twenty',
-                                style: ABeeZee(20, 23.64, color: 'black'),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 50,
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.black,
-                            )
-                          ],
-                        )),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Column(
-            // 각 게임의 리더보드를 볼 수 있는 버튼을 구성합니다
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-                child: Stack(
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            side: BorderSide(
-                                width: 0, color: ReturnColor('white')),
-                            backgroundColor: ReturnColor('white'),
-                            fixedSize: Size(330, 80)),
-                        onPressed: (() {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      MyLeaderboardDetailPage()));
-                        }),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: Text(
                                 'Paper-FlipOver',
                                 style: ABeeZee(20, 23.64, color: 'black'),
                               ),

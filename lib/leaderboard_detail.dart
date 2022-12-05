@@ -34,6 +34,30 @@ class _MyLeaderboardDetailPageState extends State<MyLeaderboardDetailPage> {
                     decoration: BoxDecoration(
                         color: ReturnColor('white'),
                         borderRadius: BorderRadius.circular(15)),
+                    child: ListView(
+                      children: [
+                        ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: 100,
+                            itemBuilder: ((context, index) {
+                              return ListTile(
+                                leading: Text(
+                                  '#${index}',
+                                  style: ABeeZee(16, 18.91, color: 'black'),
+                                ),
+                                title: Text(
+                                  'userid',
+                                  style: ABeeZee(16, 18.91, color: 'black'),
+                                ),
+                                trailing: Text(
+                                  '123456',
+                                  style: ABeeZee(16, 18.91, color: 'black'),
+                                ),
+                              );
+                            }))
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -57,33 +81,47 @@ class _MyLeaderboardDetailPageState extends State<MyLeaderboardDetailPage> {
                         borderRadius: BorderRadius.circular(15)),
                     child: Padding(
                       padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              child: Container(
-                            child: Text(
-                              '#rank',
-                              style: ABeeZee(16, 18.91, color: 'black'),
-                            ),
-                          )),
-                          Expanded(
-                              flex: 2,
-                              child: Container(
-                                child: Text(
-                                  'userid',
-                                  style: ABeeZee(16, 18.91, color: 'black'),
-                                ),
-                              )),
-                          Expanded(
-                              child: Container(
-                            child: Text(
-                              'score',
-                              style: ABeeZee(16, 18.91, color: 'black'),
-                            ),
-                          )),
-                        ],
+                      child: ListTile(
+                        leading: Text(
+                          '#rank',
+                          style: ABeeZee(16, 18.91, color: 'black'),
+                        ),
+                        title: Text(
+                          'userid',
+                          style: ABeeZee(16, 18.91, color: 'black'),
+                        ),
+                        trailing: Text(
+                          '123456',
+                          style: ABeeZee(16, 18.91, color: 'black'),
+                        ),
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Expanded(
+                      //         child: Container(
+                      //       child: Text(
+                      //         '#rank',
+                      //         style: ABeeZee(16, 18.91, color: 'black'),
+                      //       ),
+                      //     )),
+                      //     Expanded(
+                      //         flex: 2,
+                      //         child: Container(
+                      //           child: Text(
+                      //             'userid',
+                      //             style: ABeeZee(16, 18.91, color: 'black'),
+                      //           ),
+                      //         )),
+                      //     Expanded(
+                      //         child: Container(
+                      //       child: Text(
+                      //         '123456',
+                      //         style: ABeeZee(16, 18.91, color: 'black'),
+                      //       ),
+                      //     )),
+                      //   ],
+                      // ),
                     ),
                   ),
                 ),
