@@ -104,6 +104,118 @@ class _MyHomepageState extends State<MyHomepage> {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Column(
+            children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+                  child: Stack(children: [
+                    ElevatedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            side: BorderSide(
+                                width: 0, color: ReturnColor('white')),
+                            backgroundColor: ReturnColor('white'),
+                            fixedSize: Size(330, 150)),
+                        onPressed: (() {
+                          Navigator.pushNamed(context, '/flip');
+                        }),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('red')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('red')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('red')),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        color: ReturnColor('blue')),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        )),
+                  ])),
+              SizedBox(
+                height: 8,
+              ),
+              Center(
+                child: Text(
+                  'Paper-FlipOver',
+                  style: ABeeZee(20, 23.64),
+                ),
+              ),
+            ],
           )
         ],
       ),
