@@ -95,33 +95,6 @@ class _MyLeaderboardDetailPageState extends State<MyLeaderboardDetailPage> {
                           style: ABeeZee(16, 18.91, color: 'black'),
                         ),
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     Expanded(
-                      //         child: Container(
-                      //       child: Text(
-                      //         '#rank',
-                      //         style: ABeeZee(16, 18.91, color: 'black'),
-                      //       ),
-                      //     )),
-                      //     Expanded(
-                      //         flex: 2,
-                      //         child: Container(
-                      //           child: Text(
-                      //             'userid',
-                      //             style: ABeeZee(16, 18.91, color: 'black'),
-                      //           ),
-                      //         )),
-                      //     Expanded(
-                      //         child: Container(
-                      //       child: Text(
-                      //         '123456',
-                      //         style: ABeeZee(16, 18.91, color: 'black'),
-                      //       ),
-                      //     )),
-                      //   ],
-                      // ),
                     ),
                   ),
                 ),

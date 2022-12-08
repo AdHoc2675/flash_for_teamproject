@@ -2,10 +2,10 @@ import 'package:flash_for_teamproject/Pages/weather_screen.dart';
 import 'package:flash_for_teamproject/flip_over.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_for_teamproject/Pages/loading.dart';
-import 'Pages/login.dart';
+import 'package:flash_for_teamproject/Pages/login.dart';
+import 'package:flash_for_teamproject/Pages/profilepage.dart';
+
 import 'Theme/color.dart';
-import 'flip_over.dart';
-import 'main.dart';
 import 'reaction_time.dart';
 import 'calculation_ability.dart';
 import 'home.dart';
@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: LoginSignupScreen(),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
         '/calculation_ability': (BuildContext context) =>
             const CalculationAbilityPage(),
         '/login': (BuildContext context) => LoginSignupScreen(),
+
+        '/profile': (BuildContext context) => MyProfilePage(),
+
       },
     );
   }

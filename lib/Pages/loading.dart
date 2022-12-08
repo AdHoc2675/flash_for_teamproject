@@ -5,7 +5,7 @@ import 'package:flash_for_teamproject/data/network.dart';
 import 'package:flash_for_teamproject/Pages/weather_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-const apiKey = '0d0cc1131b44cd6ea0027e60e69dc007';
+const apiKey = '6c0e44417eb293cf47121445857fa1db';
 
 class Loading extends StatefulWidget {
   @override
@@ -54,9 +54,10 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ReturnColor('blue'),
-        body: Center(
+        body: const Center(
             child: SpinKitDoubleBounce(
-          duration: Duration(milliseconds: 2000),
+
+          duration: Duration(seconds: 3),
           color: Colors.white,
           size: 80.0,
         )));

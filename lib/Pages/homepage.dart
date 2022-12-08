@@ -13,7 +13,22 @@ class MyHomepage extends StatefulWidget {
 
 class _MyHomepageState extends State<MyHomepage> {
   Widget build(BuildContext context) {
-    return Center(
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 15.0),
+            child: IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {},
+              iconSize: 30.0,
+            ),
+          ),
+        ],
+      ),
+      body: Center(
       child: ListView(
         children: <Widget>[
           SizedBox(

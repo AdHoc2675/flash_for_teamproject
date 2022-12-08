@@ -70,8 +70,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.near_me),
-          onPressed: () {},
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, '/profile');
+          },
           iconSize: 30.0,
         ),
         actions: [
@@ -152,8 +154,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                             ),
                             Row(
                               children: [
-                                //icon!,
-                                Image.asset('assets/images/bad.png'),
+                                icon!,
                                 SizedBox(width: 10.0),
                                 Text('$des',
                                     style: GoogleFonts.lato(
@@ -183,11 +184,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               const SizedBox(
                                 height: 10.0,
                               ),
-                              Image.asset('assets/images/bad.png'),
-                              //pollution!,
+                              pollution!,
                               const SizedBox(height: 10.0),
-                              //quality!,
-                              Image.asset('assets/images/bad.png'),
+                              quality!,
                             ],
                           ),
                           Column(
@@ -237,26 +236,3 @@ class _WeatherScreenState extends State<WeatherScreen> {
     );
   }
 }
-
-// void getLocation() async {
-//   MyLocation myLocation = MyLocation();
-//   await myLocation.getMyCurrentLocation();
-
-//   late double latitude3;
-//   late double longitude3;
-
-//   latitude3 = myLocation.latitude2;
-//   longitude3 = myLocation.longitude2;
-
-//   Network network = Network(
-//       'https://api.openweathermap.org/data/2.5/weather?lat=$latitude3&lon=$longitude3&appid=$apiKey&units=metric');
-//   var weatherData = await network.getJsonData();
-
-//   print(weatherData);
-
-//   Navigator.push(context, MaterialPageRoute(builder: (context) {
-//     return WeatherScreen(
-//       parseWeatherData: weatherData,
-//     );
-//   }));
-// }

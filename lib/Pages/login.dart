@@ -362,6 +362,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8.0,
                                 ),
                                 TextFormField(
+                                  obscureText: true,
                                   key: const ValueKey(5),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
@@ -418,7 +419,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               left: 0,
               child: Center(
                 child: Container(
-                  padding: EdgeInsets.all(15),
+
+                  padding: const EdgeInsets.all(15),
+
                   height: 90,
                   width: 90,
                   decoration: BoxDecoration(
@@ -435,7 +438,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   email: userEmail, password: userPassword);
 
                           if (newUser.user != null) {
-                            Navigator.pushNamed(context, '/');
+
+                            Navigator.pushNamed(context, '/home');
+
                           }
                         } catch (e) {
                           print(e);
@@ -447,6 +452,21 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           ));
                         }
                       }
+
+                      if (!isSignupScreen) {
+                        try {
+                          _tryValidation();
+                          final newUser =
+                              await _authentication.signInWithEmailAndPassword(
+                                  email: userEmail, password: userPassword);
+                          if (newUser.user != null) {
+                            Navigator.pushNamed(context, '/home');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      }
+
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -496,7 +516,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     ),
                     TextButton.icon(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/');
+
+                        Navigator.pushNamed(context, '/home');
+
                       },
                       style: TextButton.styleFrom(
                           primary: Colors.white,
@@ -509,7 +531,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     ),
                     TextButton.icon(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/');
+
+                        Navigator.pushNamed(context, '/home');
+
                       },
                       style: TextButton.styleFrom(
                           primary: Colors.white,
