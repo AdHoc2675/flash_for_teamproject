@@ -419,7 +419,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               left: 0,
               child: Center(
                 child: Container(
+
                   padding: const EdgeInsets.all(15),
+
                   height: 90,
                   width: 90,
                   decoration: BoxDecoration(
@@ -429,13 +431,16 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     onTap: () async {
                       if (isSignupScreen) {
                         _tryValidation();
+
                         try {
                           final newUser = await _authentication
                               .createUserWithEmailAndPassword(
                                   email: userEmail, password: userPassword);
 
                           if (newUser.user != null) {
+
                             Navigator.pushNamed(context, '/home');
+
                           }
                         } catch (e) {
                           print(e);
@@ -447,6 +452,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           ));
                         }
                       }
+
                       if (!isSignupScreen) {
                         try {
                           _tryValidation();
@@ -460,6 +466,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                           print(e);
                         }
                       }
+
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -509,7 +516,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     ),
                     TextButton.icon(
                       onPressed: () {
+
                         Navigator.pushNamed(context, '/home');
+
                       },
                       style: TextButton.styleFrom(
                           primary: Colors.white,
@@ -522,7 +531,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                     ),
                     TextButton.icon(
                       onPressed: () {
+
                         Navigator.pushNamed(context, '/home');
+
                       },
                       style: TextButton.styleFrom(
                           primary: Colors.white,

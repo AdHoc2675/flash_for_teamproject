@@ -8,6 +8,14 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.9"
+  animated_text_kit:
+    dependency: "direct main"
+    description:
+      name: animated_text_kit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.2"
+
   archive:
     dependency: transitive
     description:
@@ -497,6 +505,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliding_number:
+    dependency: "direct main"
+    description:
+      name: sliding_number
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   source_span:
     dependency: transitive
     description:

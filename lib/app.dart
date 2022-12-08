@@ -32,7 +32,9 @@ class MyApp extends StatelessWidget {
         '/calculation_ability': (BuildContext context) =>
             const CalculationAbilityPage(),
         '/login': (BuildContext context) => LoginSignupScreen(),
+
         '/profile': (BuildContext context) => MyProfilePage(),
+
       },
     );
   }

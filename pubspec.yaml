@@ -50,6 +50,8 @@ dependencies:
   cloud_firestore: ^4.1.0
   firebase_core: ^2.3.0
   firebase_auth: ^4.1.5
+  sliding_number: ^0.0.4
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +75,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+  - assets/sound/
   - assets/images/background.jpg
   - assets/images/bad.png
   - assets/images/fair.png
@@ -97,6 +100,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
 assets:
+  - assets/sound/
   - assets/images/background.jpg
   - assets/images/bad.png
   - assets/images/fair.png

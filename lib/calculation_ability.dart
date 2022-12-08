@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:sliding_number/sliding_number.dart';
 import 'package:time/time.dart';
 
 import '../Theme/color.dart';
@@ -427,14 +428,12 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
                   textAlign: TextAlign.center,
                 ),
               )),
-          SizedBox(
-              width: 330,
-              height: 100,
-              child: Text(
-                '${score}',
-                style: Timetravel(40, 42.6),
-                textAlign: TextAlign.center,
-              )),
+          SlidingNumber(
+            number: score,
+            style: Timetravel(40, 42.6),
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.easeOutQuint,
+          ),
           SizedBox(
             height: 50,
           ),
