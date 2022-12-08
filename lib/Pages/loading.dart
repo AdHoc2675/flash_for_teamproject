@@ -56,7 +56,7 @@ class _LoadingState extends State<Loading> {
         backgroundColor: ReturnColor('blue'),
         body: Center(
             child: SpinKitDoubleBounce(
-          duration: Duration(milliseconds: 2),
+          duration: Duration(milliseconds: 2000),
           color: Colors.white,
           size: 80.0,
         )));

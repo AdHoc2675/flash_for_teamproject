@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 import '../Theme/color.dart';
@@ -19,11 +20,25 @@ class _MyHomepageState extends State<MyHomepage> {
             height: 50,
           ),
           Center(
-            child: Text('Flash',
-                style: Timetravel(
-                  50,
-                  53.25,
-                )),
+            child: SizedBox(
+              height: 60,
+              child: AnimatedTextKit(repeatForever: true, animatedTexts: [
+                FlickerAnimatedText("Flash",
+                    textStyle: TextStyle(
+                        fontSize: 50,
+                        fontFamily: 'Timetravle',
+                        fontWeight: FontWeight.w500,
+                        height: 53.25 / 50,
+                        color: ReturnColor('white'),
+                        shadows: [
+                          Shadow(
+                            blurRadius: 7.0,
+                            color: Colors.white,
+                            offset: Offset(2, 2),
+                          ),
+                        ]))
+              ]),
+            ),
           ),
           SizedBox(
             height: 50,
