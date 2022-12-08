@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flash_for_teamproject/config/palette.dart';
 import 'package:flash_for_teamproject/Theme/color.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({Key? key}) : super(key: key);
@@ -10,6 +11,8 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends State<LoginSignupScreen> {
+  final _authentication = FirebaseAuth.instance;
+
   bool isSignupScreen = true;
   final _formKey = GlobalKey<FormState>();
   String userName = '';
@@ -189,6 +192,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   onSaved: (value) {
                                     userName = value!;
                                   },
+                                  onChanged: (value) {
+                                    userName = value;
+                                  },
                                   decoration: const InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.account_circle,
@@ -218,6 +224,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8,
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
                                   key: const ValueKey(2),
                                   validator: (value) {
                                     if (value!.isEmpty ||
@@ -228,6 +235,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   },
                                   onSaved: (value) {
                                     userEmail = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userEmail = value;
                                   },
                                   decoration: const InputDecoration(
                                       prefixIcon: Icon(
@@ -258,6 +268,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8,
                                 ),
                                 TextFormField(
+                                  obscureText: true,
                                   key: const ValueKey(3),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
@@ -267,6 +278,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   },
                                   onSaved: (value) {
                                     userPassword = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userPassword = value;
                                   },
                                   decoration: const InputDecoration(
                                       prefixIcon: Icon(
@@ -316,6 +330,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   onSaved: (value) {
                                     userEmail = value!;
                                   },
+                                  onChanged: (value) {
+                                    userEmail = value;
+                                  },
                                   decoration: const InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.email,
@@ -345,6 +362,7 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   height: 8.0,
                                 ),
                                 TextFormField(
+                                  obscureText: true,
                                   key: const ValueKey(5),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
@@ -354,6 +372,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                   },
                                   onSaved: (value) {
                                     userPassword = value!;
+                                  },
+                                  onChanged: (value) {
+                                    userPassword = value;
                                   },
                                   decoration: const InputDecoration(
                                       prefixIcon: Icon(
@@ -398,15 +419,47 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
               left: 0,
               child: Center(
                 child: Container(
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   height: 90,
                   width: 90,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(50)),
                   child: GestureDetector(
-                    onTap: () {
-                      _tryValidation();
+                    onTap: () async {
+                      if (isSignupScreen) {
+                        _tryValidation();
+                        try {
+                          final newUser = await _authentication
+                              .createUserWithEmailAndPassword(
+                                  email: userEmail, password: userPassword);
+
+                          if (newUser.user != null) {
+                            Navigator.pushNamed(context, '/home');
+                          }
+                        } catch (e) {
+                          print(e);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content:
+                                Text('Please check your email and password'),
+                            backgroundColor: Colors.blue,
+                          ));
+                        }
+                      }
+                      if (!isSignupScreen) {
+                        try {
+                          _tryValidation();
+                          final newUser =
+                              await _authentication.signInWithEmailAndPassword(
+                                  email: userEmail, password: userPassword);
+                          if (newUser.user != null) {
+                            Navigator.pushNamed(context, '/home');
+                          }
+                        } catch (e) {
+                          print(e);
+                        }
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -445,26 +498,43 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                   : MediaQuery.of(context).size.height - 165,
               right: 0,
               left: 0,
-              child: Column(
-                children: [
-                  Text(isSignupScreen ? 'or Signup with' : 'or Signin with'),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/');
-                    },
-                    style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        minimumSize: const Size(155, 40),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        backgroundColor: ReturnColor('blue')),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Google'),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: [
+                    Text(
+                        isSignupScreen ? 'or Sign Up with' : 'or Sign In with'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          minimumSize: const Size(155, 40),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          backgroundColor: ReturnColor('blue')),
+                      icon: const Icon(Icons.add),
+                      label: const Text('Google'),
+                    ),
+                    TextButton.icon(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          minimumSize: const Size(155, 40),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          backgroundColor: ReturnColor('blue')),
+                      icon: const Icon(Icons.people),
+                      label: const Text('Guest'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

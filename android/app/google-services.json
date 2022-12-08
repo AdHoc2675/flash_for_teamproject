@@ -29,6 +29,13 @@
             {
               "client_id": "346470561859-86effrdj2bb8vea760k7of6m7at1mkdj.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "346470561859-8e689t1s98qu6eg0pbo2s1u976t282t2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flashForTeamproject"
+              }
             }
           ]
         }
