@@ -2,6 +2,7 @@ import 'package:flash_for_teamproject/Pages/weather_screen.dart';
 import 'package:flash_for_teamproject/flip_over.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_for_teamproject/Pages/loading.dart';
+import 'Pages/login.dart';
 import 'Theme/color.dart';
 import 'flip_over.dart';
 import 'main.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: ReturnColor('blue'),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (BuildContext context) => const MyHome(),
         '/reaction_time': (BuildContext context) => const ReactionTime(),
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/loading': (BuildContext context) => Loading(),
         '/calculation_ability': (BuildContext context) =>
             const CalculationAbilityPage(),
+        '/login': (BuildContext context) => LoginSignupScreen(),
       },
     );
   }
