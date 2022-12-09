@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Theme/color.dart';
 import '../Theme/font.dart';
@@ -12,6 +13,26 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser;
+      if (user != null) {
+        loggedUser = user;
+        print(loggedUser!.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,6 +45,14 @@ class _MyProfilePageState extends State<MyProfilePage> {
           },
           iconSize: 30.0,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              _authentication.signOut();
+            },
+          )
+        ],
       ),
       body: Center(
         child: ListView(
@@ -81,7 +110,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
                               BorderSide(width: 0, color: ReturnColor('white')),
                           backgroundColor: ReturnColor('white'),
                           fixedSize: Size(330, 80)),
-                      onPressed: (() {}),
+                      onPressed: (() {
+                        Navigator.pushNamed(context, '/chat');
+                      }),
                       child: Text(
                         'Chat',
                         style: ABeeZee(30, 37.82, color: 'black'),

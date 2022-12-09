@@ -35,7 +35,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
   int selectedValue = 0; //사용자가 선택한 답의 값을 저장
   int answerButton = 0; //정답 값이 들어있는 버튼의 index
 
-  Timer _timer = new Timer(const Duration(), () {}); //타이머
+  Timer _timer = Timer(const Duration(), () {}); //타이머
   int _time = 0; //걸린 시간
   int second = 0; //걸린 시간 초
   var milisecond = '0'; //걸린 시간 ms
@@ -72,12 +72,10 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
     } else {
       return "-";
     }
-    ;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -96,7 +94,6 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
       minWidth: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       onPressed: (() {
-        print('hello'); //잘 되는지 확인
         setState(() {
           if (isStarted == false) {
             isStarted = true;
@@ -115,7 +112,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
           lowerThanAnswer = answerValue - (Random().nextInt(5) + 1);
           higherThanAnswer = answerValue + (Random().nextInt(5) + 1);
 
-          _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+          _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
             if (this.mounted) {
               setState(() {
                 _time = _time + 1;
@@ -128,7 +125,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
       }),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 70,
           ),
           SizedBox(
@@ -140,7 +137,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           SizedBox(
@@ -154,7 +151,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           SizedBox(
@@ -179,7 +176,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
       onPressed: (() {}),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 70,
           ),
           SizedBox(
@@ -191,7 +188,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 100,
           ),
           SizedBox(
@@ -202,7 +199,7 @@ class _CalculationAbilityPageState extends State<CalculationAbilityPage> {
                 style: ABeeZee(40, 47.28),
                 textAlign: TextAlign.center,
               )),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(

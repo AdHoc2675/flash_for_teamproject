@@ -1,25 +1,29 @@
+import 'package:flash_for_teamproject/Pages/chat_screen.dart';
 import 'package:flash_for_teamproject/Pages/login.dart';
 import 'package:flash_for_teamproject/firebase_options.dart';
 import 'package:flash_for_teamproject/reaction_time.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'Pages/loading.dart';
 import 'Pages/profilepage.dart';
 import 'Pages/weather_screen.dart';
 import 'Theme/color.dart';
-import 'app.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'Theme/color.dart';
+import 'package:flash_for_teamproject/auth/auth.dart';
 import 'flip_over.dart';
-import 'reaction_time.dart';
 import 'calculation_ability.dart';
 import 'home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
-    MyApp(),
+    MultiProvider(builder: ((context, child) => const MyApp()), providers: [
+      ChangeNotifierProvider(
+        create: (context) => Auth(),
+      ),
+    ]),
   );
 }
 
@@ -42,10 +46,19 @@ class MyApp extends StatelessWidget {
         '/loading': (BuildContext context) => Loading(),
         '/calculation_ability': (BuildContext context) =>
             const CalculationAbilityPage(),
-        '/login': (BuildContext context) => LoginSignupScreen(),
-        '/profile': (BuildContext context) => MyProfilePage(),
+        '/login': (BuildContext context) => const LoginSignupScreen(),
+        '/profile': (BuildContext context) => const MyProfilePage(),
+        '/chat': (BuildContext context) => const ChatScreen(),
       },
-      home: LoginSignupScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: ((context, snapshot) {
+          if (snapshot.hasData) {
+            return LoginSignupScreen();
+          }
+          return LoginSignupScreen();
+        }),
+      ),
     );
   }
 }

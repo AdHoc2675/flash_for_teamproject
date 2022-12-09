@@ -1,11 +1,9 @@
-import 'package:flash_for_teamproject/Theme/color.dart';
-import 'package:flash_for_teamproject/data/my_location.dart';
 import 'package:flutter/material.dart';
-
 import 'Pages/homepage.dart';
 import 'Pages/leaderboardpage.dart';
 import 'Pages/profilepage.dart';
 import 'Theme/font.dart';
+import 'Pages/chat_screen.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({super.key});
@@ -28,9 +26,9 @@ class _MyHomeState extends State<MyHome> {
   }
 
   final pages = [
-    MyHomepage(), //홈
-    MyProfilePage(),
-    MyLeaderboardPage(),
+    const MyHomepage(), //홈
+    const MyProfilePage(),
+    const MyLeaderboardPage(),
   ];
 
   @override
@@ -44,7 +42,7 @@ class _MyHomeState extends State<MyHome> {
   Widget MyNavigationBar(BuildContext context) {
     return Container(
       height: 60,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xffFFFFFF),
       ),
       child: Row(
@@ -70,33 +68,33 @@ class _MyHomeState extends State<MyHome> {
   Icon getIcons(String iconName, int buttonIndex) {
     if (iconName == 'Home') {
       if (currentPage == buttonIndex) {
-        return Icon(Icons.home);
+        return const Icon(Icons.home);
       } else {
-        return Icon(
+        return const Icon(
           Icons.home,
           color: Colors.black,
         );
       }
     } else if (iconName == 'Profile') {
       if (currentPage == buttonIndex) {
-        return Icon(Icons.account_circle);
+        return const Icon(Icons.account_circle);
       } else {
-        return Icon(
+        return const Icon(
           Icons.account_circle,
           color: Colors.black,
         );
       }
     } else if (iconName == 'Leaderboard') {
       if (currentPage == buttonIndex) {
-        return Icon(Icons.leaderboard);
+        return const Icon(Icons.leaderboard);
       } else {
-        return Icon(
+        return const Icon(
           Icons.leaderboard,
           color: Colors.black,
         );
       }
     } else {
-      return Icon(Icons.home);
+      return const Icon(Icons.home);
     }
   }
 
@@ -108,7 +106,7 @@ class _MyHomeState extends State<MyHome> {
       width: 130,
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
-            side: BorderSide(width: 0, color: Colors.white),
+            side: const BorderSide(width: 0, color: Colors.white),
             backgroundColor: Colors.white,
           ),
           onPressed: () {

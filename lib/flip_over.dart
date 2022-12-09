@@ -1,7 +1,5 @@
-import 'Theme/color.dart';
 import 'Theme/font.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 class flipOver extends StatefulWidget {
   const flipOver({super.key});
