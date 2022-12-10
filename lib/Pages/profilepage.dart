@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../Theme/color.dart';
 import '../Theme/font.dart';
@@ -13,25 +13,7 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
-  final _authentication = FirebaseAuth.instance;
-  User? loggedUser;
-
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
-
-  void getCurrentUser() {
-    try {
-      final user = _authentication.currentUser;
-      if (user != null) {
-        loggedUser = user;
-        print(loggedUser!.email);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  var name = FirebaseAuth.instance.currentUser?.displayName;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,19 +23,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
         leading: IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
-            Navigator.pushNamed(context, '/home');
+            Navigator.pushNamed(context, '/');
           },
           iconSize: 30.0,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              _authentication.signOut();
-              Navigator.pushNamed(context, '/login');
-            },
-          )
-        ],
       ),
       body: Center(
         child: ListView(
@@ -89,10 +62,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
               width: 150,
               height: 150,
               decoration: new BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: new DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage("https://i.imgur.com/BoN9kdC.png"))),
+                shape: BoxShape.circle,
+                color: ReturnColor('white'),
+              ),
             ),
             SizedBox(
               height: 30,
@@ -111,9 +83,32 @@ class _MyProfilePageState extends State<MyProfilePage> {
                               BorderSide(width: 0, color: ReturnColor('white')),
                           backgroundColor: ReturnColor('white'),
                           fixedSize: Size(330, 80)),
-                      onPressed: (() {
-                        Navigator.pushNamed(context, '/chat');
-                      }),
+                      onPressed: (() {}),
+                      child: Text(
+                        '$name',
+                        style: ABeeZee(30, 37.82, color: 'black'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+                child: Stack(
+                  children: [
+                    ElevatedButton(
+                      style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          side:
+                              BorderSide(width: 0, color: ReturnColor('white')),
+                          backgroundColor: ReturnColor('white'),
+                          fixedSize: Size(330, 80)),
+                      onPressed: (() {}),
                       child: Text(
                         'Chat',
                         style: ABeeZee(30, 37.82, color: 'black'),
@@ -123,7 +118,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 ),
               ),
               SizedBox(
-                height: 120,
+                height: 30,
               ),
               Stack(
                 children: [
