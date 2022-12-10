@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timer_builder/timer_builder.dart';
@@ -16,6 +17,8 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
   Model model = Model();
   String? cityName;
   int? temp;
@@ -78,10 +81,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(
-              Icons.location_searching,
-            ),
-            onPressed: () {},
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              _authentication.signOut();
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('Logout 하였습니다.')));
+              Navigator.pushNamed(context, '/login');
+            },
             iconSize: 30.0,
           )
         ],

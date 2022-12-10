@@ -41,7 +41,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
         leading: IconButton(
           icon: const Icon(Icons.home),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            Navigator.pushNamed(context, '/home');
           },
           iconSize: 30.0,
         ),
@@ -50,6 +50,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
             icon: const Icon(Icons.logout),
             onPressed: () {
               _authentication.signOut();
+              Navigator.pushNamed(context, '/login');
             },
           )
         ],

@@ -7,6 +7,8 @@ import 'package:flash_for_teamproject/auth/auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../add_image/add_image.dart';
+
 class LoginSignupScreen extends StatefulWidget {
   const LoginSignupScreen({Key? key}) : super(key: key);
 
@@ -29,6 +31,15 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
     if (isValid) {
       _formKey.currentState!.save();
     }
+  }
+
+  void showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              backgroundColor: ReturnColor('white'), child: const AddImage());
+        });
   }
 
   @override
@@ -161,18 +172,34 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                               },
                               child: Column(
                                 children: [
-                                  Text(
-                                    'SIGNUP',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: isSignupScreen
-                                            ? Palette.activeColor
-                                            : Palette.textColor1),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'SIGNUP',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: isSignupScreen
+                                                ? Palette.activeColor
+                                                : Palette.textColor1),
+                                      ),
+                                      const SizedBox(
+                                        width: 15,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          showAlert(context);
+                                        },
+                                        child: Icon(Icons.image,
+                                            color: isSignupScreen
+                                                ? Colors.cyan
+                                                : Colors.grey[300]),
+                                      ),
+                                    ],
                                   ),
                                   if (isSignupScreen)
                                     Container(
-                                      margin: EdgeInsets.only(top: 3),
+                                      margin: EdgeInsets.fromLTRB(0, 3, 35, 0),
                                       height: 2,
                                       width: 55,
                                       color: Colors.orange,
@@ -373,7 +400,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                     obscureText: true,
                                     key: const ValueKey(5),
                                     validator: (value) {
-                                      if (value!.isEmpty || value.length < 6) {
+                                      if (value!.isEmpty ||
+                                          value.length < 6 ||
+                                          value != userPassword) {
                                         return 'Password must be at least 7 characters long.';
                                       }
                                       return null;
@@ -455,7 +484,6 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
 
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('$userName 님 안녕하세요 !')));
-                            print(userName);
 
                             if (newUser.user != null) {
                               Navigator.pushNamed(context, '/home');
@@ -481,6 +509,9 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                                 .signInWithEmailAndPassword(
                                     email: userEmail, password: userPassword);
                             if (newUser.user != null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Flash에 방문하신걸 환영합니다 !')));
                               Navigator.pushNamed(context, '/home');
                             }
                           } catch (e) {
@@ -521,8 +552,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeIn,
                 top: isSignupScreen
-                    ? MediaQuery.of(context).size.height - 125
-                    : MediaQuery.of(context).size.height - 165,
+                    ? MediaQuery.of(context).size.height - 155
+                    : MediaQuery.of(context).size.height - 185,
                 right: 0,
                 left: 0,
                 child: Padding(
@@ -536,35 +567,23 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                         height: 10,
                       ),
                       // _googleloginButton(() {}),
-                      // _AnonymousButton(),
+                      //_AnonymousButton(),
                       TextButton.icon(
                         onPressed: () {
-                          // authProvider.signInWithGoogle();
+                          authProvider.signInWithGoogle();
                           Navigator.pushNamed(context, '/home');
                           print(userName);
                         },
                         style: TextButton.styleFrom(
                             primary: Colors.white,
-                            minimumSize: const Size(155, 40),
+                            minimumSize: const Size(255, 40),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             backgroundColor: ReturnColor('blue')),
                         icon: const Icon(Icons.add),
                         label: const Text('Google'),
                       ),
-                      TextButton.icon(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                        style: TextButton.styleFrom(
-                            primary: Colors.white,
-                            minimumSize: const Size(155, 40),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            backgroundColor: ReturnColor('blue')),
-                        icon: const Icon(Icons.people),
-                        label: const Text('Guest'),
-                      ),
+                      _AnonymousButton(),
                     ],
                   ),
                 ),
@@ -594,21 +613,22 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
   //   );
   // }
 
-  // Widget _AnonymousButton() {
-  //   final authProvider = Provider.of<Auth>(context);
-  //   return TextButton.icon(
-  //     onPressed: () async {
-  //       authProvider.signInAnonymously();
-  //       Navigator.pushNamed(context, '/home');
-  //     },
-  //     style: TextButton.styleFrom(
-  //         primary: Colors.white,
-  //         minimumSize: const Size(155, 40),
-  //         shape:
-  //             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-  //         backgroundColor: ReturnColor('blue')),
-  //     icon: const Icon(Icons.people),
-  //     label: const Text('Guest'),
-  //   );
-  // }
+  Widget _AnonymousButton() {
+    final authProvider = Provider.of<Auth>(context);
+    return TextButton.icon(
+      onPressed: () async {
+        authProvider.signInAnonymously();
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('$userName 님 안녕하세요 !')));
+      },
+      style: TextButton.styleFrom(
+          primary: Colors.white,
+          minimumSize: const Size(255, 40),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: ReturnColor('blue')),
+      icon: const Icon(Icons.people),
+      label: const Text('Guest'),
+    );
+  }
 }

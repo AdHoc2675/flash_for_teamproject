@@ -13,6 +13,20 @@ class MyHomepage extends StatefulWidget {
 }
 
 class _MyHomepageState extends State<MyHomepage> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser;
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +37,12 @@ class _MyHomepageState extends State<MyHomepage> {
             padding: EdgeInsets.only(right: 15.0),
             child: IconButton(
               icon: const Icon(Icons.logout),
-              onPressed: () {},
+              onPressed: () {
+                _authentication.signOut();
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text('Logout 하였습니다.')));
+                Navigator.pushNamed(context, '/login');
+              },
               iconSize: 30.0,
             ),
           ),
