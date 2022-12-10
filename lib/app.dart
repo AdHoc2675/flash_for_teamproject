@@ -10,8 +10,8 @@ import 'reaction_time.dart';
 import 'calculation_ability.dart';
 import 'home.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp2 extends StatelessWidget {
+  const MyApp2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,7 @@ class MyApp extends StatelessWidget {
         '/calculation_ability': (BuildContext context) =>
             const CalculationAbilityPage(),
         '/login': (BuildContext context) => LoginSignupScreen(),
-
         '/profile': (BuildContext context) => MyProfilePage(),
-
       },
     );
   }
