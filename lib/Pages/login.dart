@@ -475,7 +475,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             final newUser = await _authentication
                                 .createUserWithEmailAndPassword(
                                     email: userEmail, password: userPassword);
-
+                            User? user = newUser.user;
+                            user?.updateDisplayName(userName);
                             await FirebaseFirestore.instance
                                 .collection('user')
                                 .doc(newUser.user!.uid)
@@ -508,6 +509,8 @@ class _LoginSignupScreenState extends State<LoginSignupScreen> {
                             final newUser = await _authentication
                                 .signInWithEmailAndPassword(
                                     email: userEmail, password: userPassword);
+                            User? user = newUser.user;
+                            user?.updateDisplayName(userName);
                             if (newUser.user != null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
